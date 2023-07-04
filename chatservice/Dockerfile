@@ -1,5 +1,5 @@
 # Criando a imagem intermediária de build da aplicação
-FROM golang:1.20.3-bullseye as build
+FROM --platform=linux/x86_64 golang:1.20.3-bullseye as build
 
 # Definindo as variáveis de ambiente
 ENV PATH="/root/.cargo/bin:${PATH}"
@@ -28,7 +28,7 @@ RUN cd /go/src && \
     GOOS=linux CGO_ENABLED=1 go build -o chatservice cmd/chatservice/main.go
 
 # Criação da imagem final
-FROM golang:1.20.3
+FROM --platform=linux/x86_64 golang:1.20.3
 
 RUN curl -s https://packagecloud.io/install/repositories/golang-migrate/migrate/script.deb.sh | bash && \
     apt-get update && \
